@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 FROM nodebuilder AS development
 COPY --chown=node:node ./package.json ./package-lock.json* ./
 RUN npm ci
+COPY --chown=node:node ./ ./
 USER node
 
 # ================================================================================================================
