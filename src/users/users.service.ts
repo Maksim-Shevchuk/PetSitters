@@ -75,4 +75,37 @@ export class UsersService {
       reviewsCount,
     });
   }
+
+  async updateProfile(
+    userId: string,
+    updateData: Partial<User>,
+  ): Promise<User> {
+    // Разрешенные для обновления поля
+    const allowedFields: (keyof User)[] = ['name', 'phone', 'address', 'bio'];
+    const updates: Partial<User> = {};
+
+    for (const field of allowedFields) {
+      if (updateData[field] !== undefined) {
+        (updates as Record<string, unknown>)[field] = updateData[field];
+      }
+    }
+
+    const updatedUser = await this.userModel
+      .findByIdAndUpdate(userId, updates as Record<string, unknown>, {
+        new: true,
+      })
+      .select('-password')
+      .exec();
+
+    if (!updatedUser) {
+      throw new NotFoundException('Пользователь не найден');
+    }
+
+    return updatedUser;
+  }
+
+  async deactivate(userId: string): Promise<void> {
+    await this.findById(userId); // Проверка существования
+    await this.userModel.findByIdAndUpdate(userId, { isActive: false });
+  }
 }
