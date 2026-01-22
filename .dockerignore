@@ -8,7 +8,7 @@ README.md
 .env.*
 local.env
 local.env.sample
-docker-compose*.yml
+docker-compose.local.yml
 Dockerfile*
 .dockerignore
 coverage

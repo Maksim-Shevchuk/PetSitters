@@ -33,10 +33,14 @@ docker build . --build-arg GIT_SHA1=$GIT_SHA1 --target petsitters --tag ptstr/pe
 ```
 
 ## Запуск приложения
-
-```bash
-docker compose --env-file ./local.env up -d --wait
-```
+- Development-mode: 
+    ```bash
+    docker compose -f ./docker-compose.local.yaml --env-file ./local.env up -d --wait
+    ```
+- Production-mode:
+    ```bash
+    docker compose --env-file ./local.env up -d --wait
+    ```
 
 После запуска приложение будет доступно:
 - **API:** http://localhost:3110
