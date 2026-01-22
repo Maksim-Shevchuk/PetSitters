@@ -24,7 +24,7 @@
 ## Запуск приложения
 - Development-mode: 
     ```bash
-    docker compose -f ./docker-compose.local.yaml --env-file ./local.env up -d --wait
+    docker compose -f ./docker-compose.local.yml --env-file ./local.env up -d --wait
     ```
 - Production-mode:
     ```bash
