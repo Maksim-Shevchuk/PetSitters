@@ -21,12 +21,6 @@
 
 Создать файл в корне репозитория `/local.env`, используя в качестве примера файл `/local.env.sample`
 
-## Сборока
-```bash
-GIT_SHA1=$(git rev-parse HEAD)
-docker build . --build-arg GIT_SHA1=$GIT_SHA1 --target petsitters --tag ptstr/petsitters:0.0.1
-```
-
 ## Запуск приложения
 - Development-mode: 
     ```bash
