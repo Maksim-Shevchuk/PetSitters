@@ -1,0 +1,45 @@
+services:
+  petsitters:
+    container_name: petsitters-app
+    build:
+      context: ./
+      target: production
+      args:
+        - GIT_SHA1=${GIT_SHA1}
+    ports:
+      - '${PORT}:3000'
+    restart: always
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
+    depends_on:
+      - mongodb
+    networks:
+      - petsitters-network
+
+  mongodb:
+    image: mongo:8.0
+    container_name: petsitters-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    ports:
+      - '${MONGODB_PORT}:27017'
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - petsitters-network
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+
+networks:
+  petsitters-network:
+    driver: bridge
